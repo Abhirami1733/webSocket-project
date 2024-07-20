@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Client</title>
+</head>
+<body>
+    <h1>WebSocket Client</h1>
+    <script>
+        const ws = new WebSocket('ws://localhost:8765');
+
+        // When the connection is open
+        ws.onopen = function () {
+            console.log('WebSocket connection opened');
+
+            // Send a message to the server for each action
+            ws.send(JSON.stringify({ action: 'echo', message: 'Hellooooo' }));
+            ws.send(JSON.stringify({ action: 'reverse_echo', message: 'Hellooooo' }));
+            ws.send(JSON.stringify({ action: 'count_last_char', message: 'Hellooooo' }));
+        };
+
+        // When a message is received from the server
+        ws.onmessage = function (event) {
+            const data = JSON.parse(event.data);
+            console.log('Message from server:', data);
+        };
+
+        // When the connection is closed
+        ws.onclose = function () {
+            console.log('WebSocket connection closed');
+        };
+
+        // When there's an error with the connection
+        ws.onerror = function (error) {
+            console.error('WebSocket error:', error);
+        };
+    </script>
+</body>
+</html>
+
+
